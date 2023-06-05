@@ -97,6 +97,12 @@ function TaskItem({ task, checked, onChange }) {
     console.log('EDIT', task.id);
   };
 
+  const handleAssign = () => {
+    handleCloseMenu();
+    console.log('Assign', task.id);
+  };
+
+
   const handleDelete = () => {
     handleCloseMenu();
     console.log('DELETE', task.id);

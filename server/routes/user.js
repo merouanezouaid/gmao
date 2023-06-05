@@ -22,6 +22,28 @@ router.post("/login", async (req, res) => {
   
 });
 
+
+router.post("/register", async (req, res) => {
+    const { id, NomComplet, Email, MotDePasse, Role, Entreprise } = req.body;
+    console.log(req.body);
+    const user = await Utilisateurs.findOne({ Email });
+    if (user) {
+        return res.status(400).json({ message: "email already exists" });
+    }
+    const hashedPassword = await bcrypt.hash(MotDePasse, 10);
+    const newUser = new Utilisateurs({
+        id,
+        NomComplet,
+        Email,
+        MotDePasse: hashedPassword,
+        Role,
+        Entreprise
+    });
+    await newUser.save();
+    res.status(200).json({ message: "user created successfully" });
+});
+
+
 router.get("/users", async (req, res) => {
     const users = await Utilisateurs.find();
     res.send(users);

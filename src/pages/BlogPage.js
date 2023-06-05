@@ -32,6 +32,10 @@ import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
 
+import NewIntervention from './Interventions/NewIntervention';
+
+import NewAssign from './Interventions/NewAssign';
+
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -142,6 +146,25 @@ export default function UserPage() {
     setPage(0);
     setFilterName(event.target.value);
   };
+
+  const handleAssign = () => {
+    // const user = prompt("Assigner à :");
+    // if(user == null || user === ""){
+    //   console.log("Non assigné");
+    // }
+    // else{
+    //   console.log("Assigné");
+    //   alert(`Tache assigné à ${user} avec succès !`)
+    // }
+    setOpen3(!open3);
+  }
+
+  const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
+
+  const handleIntervention = () => {
+    setOpen2(!open2);
+  };
   
   const [interventions, setInterventions] = useState([]);
   useEffect(() => {
@@ -149,7 +172,7 @@ export default function UserPage() {
       setInterventions(response.data);
       console.log(response.data);
     });
-  }, []);
+  }, [open2]);
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - interventions.length) : 0;
 
@@ -170,10 +193,12 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
             Interventions
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleIntervention}>
             Nouvelle intervention
           </Button>
         </Stack>
+        <NewIntervention isOpen={open2} toggle={handleIntervention} />
+
 
         <Card>
           <UserListToolbar placeholder="Rechercher.." numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
@@ -217,10 +242,14 @@ export default function UserPage() {
 
                         <TableCell align="right">
                           <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                            <Iconify icon={'eva:more-vertical-fill'} />
+                            <Iconify icon={'eva:more-vertical-fill'} onClick={()=> setSelected(row)}/>
                           </IconButton>
                         </TableCell>
+
+                        <NewAssign isOpen={open3} toggle={handleAssign} data={selected} />
+
                       </TableRow>
+                      
                     );
                   })}
                   {emptyRows > 0 && (
@@ -287,10 +316,16 @@ export default function UserPage() {
           },
         }}
       >
+
+        <MenuItem onClick={handleAssign} sx={{ color: 'success.main' }}>
+          <Iconify icon={'material-symbols:assignment-add'} sx={{ mr: 2 }} />
+          Assign
+        </MenuItem>
         <MenuItem>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
+        
 
         <MenuItem sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />

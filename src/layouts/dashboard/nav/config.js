@@ -23,24 +23,15 @@ const navConfig = [
   },
   {
     title: 'Interventions',
-    path: '/dashboard/blog',
+    path: '/dashboard/intervention',
     icon: icon('ic_blog'),
   },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Maintenance',
-    path: '/404',
-    icon: icon('ic_disabled'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic_disabled'),
-  },
+  // {
+  //   title: 'login',
+  //   path: '/login',
+  //   icon: icon('ic_lock'),
+  // },
+
 ];
 
 export default navConfig;

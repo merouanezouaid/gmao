@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   Email: { type: String, required: true, unique: true },
   MotDePasse: { type: String, required: true },
   Role: { type: String, required: true },
+  Entreprise: { type: String, required: true },
 });
 
 export const Utilisateurs = mongoose.model("Utilisateurs", UserSchema, "Utilisateurs");

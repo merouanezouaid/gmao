@@ -1,6 +1,9 @@
 import express from "express";
-
+import { ObjectId } from 'mongodb';
 import { Interventions } from "../models/Interventions.js";
+
+
+
 
 const router = express.Router();
 router.post('/creer', async (req, res) => {
@@ -28,6 +31,24 @@ router.post('/creer', async (req, res) => {
       res.status(500).json({ error: 'An error occurred while creating the intervention' });
     }
   });
+
+
+router.post('/assigner', async (req, res) => { 
+
+  const id = req.body._id;
+  
+  try{
+    await Interventions.findByIdAndUpdate(id, req.body, {
+        new: true, 
+    });
+    console.log(req.body)
+    res.send("updated");
+  }
+  catch(err) {
+    res.send({error: err})
+  }
+}
+);
 
 router.get("/get", async (req, res) => {
     const inters = await Interventions.find();

@@ -7,7 +7,8 @@
     Priorite: { type: String, required: true },
     Issue: { type: String, required: true },
     Description: { type: String, required: true },
-    NomDemandeur: { type: String, required: true }
+    NomDemandeur: { type: String, required: true },
+    assignee: { type: String, required: false },
     });
 
     export const Interventions = mongoose.model('Interventions', interventionSchema);

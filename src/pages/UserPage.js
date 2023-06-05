@@ -32,6 +32,8 @@ import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
 
+import NewUser from './Utilisateurs/NewUser';
+
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -155,6 +157,11 @@ export default function UserPage() {
 
   const isNotFound = !filteredUsers.length && !!filterName;
 
+  const [open1, setOpen1] = useState(false);
+
+  const handleUser = () => {
+    setOpen1(!open1);
+  };
 
 
   return (
@@ -168,10 +175,11 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
             Utilisateurs
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleUser}>
             Nouveau utilisateur
           </Button>
         </Stack>
+          <NewUser isOpen={open1} toggle={handleUser} />
 
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
@@ -286,7 +294,7 @@ export default function UserPage() {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem onClick={() => alert("yo")}>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           Edit
         </MenuItem>

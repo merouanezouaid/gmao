@@ -7,18 +7,26 @@ import { Utilisateurs } from "../models/Users.js";
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
-  const { email, MotDePasse } = req.body;
+    const { Email, MotDePasse } = req.body;
+    console.log(req.body);
+    const user = await Utilisateurs.findOne({ Email });
+    console.log(user)
+    
+    if (!user) {
+        return res
+            .status(400)
+            .json({ message: "email or password is incorrect" });
+    }
+    const isMatch = await bcrypt.compare(MotDePasse, user.MotDePasse);
+    console.log(isMatch)
+    if (!isMatch ) {
+        return res
+            .status(400)
+            .json({ message: "email or password is incorrect" });
+    }
 
-  const user = await Utilisateurs.findOne({ Email: email });
+        return res.status(200).json({ message: "user logged in successfully" });
 
-  if (!user) {
-    return res
-      .status(400)
-      .json({ message: "email or password is incorrect" });
-  }
-    return res
-    .status(200)
-    .json({ message: "It's working" });
   
 });
 

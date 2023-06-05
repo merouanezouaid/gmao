@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
-import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
+import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover, Link } from '@mui/material';
 // mocks_
 import account from '../../../_mock/account';
+
 
 // ----------------------------------------------------------------------
 
@@ -98,7 +100,9 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem onClick={handleClose} sx={{ m: 1 }}>
-          Se déconnecter
+          <Link to="/login" component={RouterLink} sx={{display: 'contents'}}>
+              Se déconnecter
+          </Link>
         </MenuItem>
       </Popover>
     </>

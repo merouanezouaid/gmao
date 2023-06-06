@@ -2,9 +2,6 @@ import express from "express";
 import { ObjectId } from 'mongodb';
 import { Interventions } from "../models/Interventions.js";
 
-
-
-
 const router = express.Router();
 router.post('/creer', async (req, res) => {
     try {

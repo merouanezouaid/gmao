@@ -39,6 +39,9 @@ export default function Nav({ openNav, onCloseNav }) {
 
   const isDesktop = useResponsive('up', 'lg');
 
+  const name = JSON.parse(localStorage.getItem("user")).user.NomComplet
+  const role = JSON.parse(localStorage.getItem("user")).user.Role
+
   useEffect(() => {
     if (openNav) {
       onCloseNav();
@@ -64,11 +67,11 @@ export default function Nav({ openNav, onCloseNav }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {name}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
+                {role}
               </Typography>
             </Box>
           </StyledAccount>

@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'Marwane Ait Si Ahmed',
-  email: 'admin@admin.com',
+  displayName: '',
+  email: '',
   photoURL: '',
 };
 

@@ -8,9 +8,9 @@ const router = express.Router();
 
 router.post("/login", async (req, res) => {
     const { Email, MotDePasse } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     const user = await Utilisateurs.findOne({ Email });
-    console.log(user)
+    // console.log(user)
     
     if (!user) {
         return res
@@ -25,7 +25,7 @@ router.post("/login", async (req, res) => {
             .json({ message: "email or password is incorrect" });
     }
 
-        return res.status(200).json({ message: "user logged in successfully" });
+        return res.status(200).json({ user, message: "user logged in successfully" });
 
   
 });

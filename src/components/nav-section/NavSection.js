@@ -31,9 +31,12 @@ NavItem.propTypes = {
 
 function NavItem({ item }) {
   const { title, path, icon, info } = item;
+  const role = JSON.parse(localStorage.getItem("user")).user.Role
+  console.log(title)
 
   return (
     <StyledNavItem
+    disabled={ (role === 'Manager' && title === "Taches" ) || (role === 'SuperAdmin' && (title === "Taches" || title === "Interventions" || title === "matériels")) || ((role !== "Manager") && (title === "tableau de bord" || title === "Interventions" || title === "utilisateurs" ))}
       component={RouterLink}
       to={path}
       sx={{

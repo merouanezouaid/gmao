@@ -9,11 +9,15 @@ import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
-import Assign from './pages/Assign';
+import MyBlogPage from './pages/MyBlogPage';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const name = JSON.parse(localStorage.getItem("user")).user.NomComplet
+  const role = JSON.parse(localStorage.getItem("user")).user.Role
+
+
   const routes = useRoutes([
     {
       path: '/dashboard',
@@ -24,6 +28,7 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'intervention', element: <BlogPage />},
+        { path: 'mesinterventions', element:  <MyBlogPage /> },
       ],
     },
     {

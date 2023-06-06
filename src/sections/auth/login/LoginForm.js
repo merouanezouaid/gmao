@@ -24,8 +24,9 @@ export default function LoginForm() {
   const handleClick = () => {
       Axios.post("http://localhost:3001/auth/login", values)
       .then((response) => {
-        console.log(response.status);
+        // console.log(response.status);
           localStorage.setItem("user", JSON.stringify(response.data));
+          console.log(JSON.parse(localStorage.getItem("user")).user);
           console.log("Successfully Logged in!!");
           navigate('/dashboard', { replace: true });
       }).catch((err) => {

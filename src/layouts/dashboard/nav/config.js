@@ -26,6 +26,11 @@ const navConfig = [
     path: '/dashboard/intervention',
     icon: icon('ic_blog'),
   },
+  {
+    title: 'Taches',
+    path: '/dashboard/mesinterventions',
+    icon: icon('ic_lock'),
+  },
   // {
   //   title: 'login',
   //   path: '/login',

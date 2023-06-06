@@ -15,6 +15,9 @@ app.use(cors());
 app.use("/auth", userRouter);
 app.use("/intervention", interventionRouter);
 
+app.get("/oula", (req, res) => {
+  res.send("Delegue");
+})
 
 mongoose.connect(
   "mongodb+srv://gmaoensam:1gnIO6I5DZfLSfRD@cluster0.03kr78z.mongodb.net/?retryWrites=true&w=majority",

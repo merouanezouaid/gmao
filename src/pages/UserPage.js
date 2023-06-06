@@ -146,9 +146,12 @@ export default function UserPage() {
   useEffect(() => {
     Axios.get('http://localhost:3001/auth/users').then((response) => {
       setUsers(response.data);
-      console.log(response.data);
     });
   }, []);
+
+  const [selectedRow, setSelectedRow] = useState('row');
+
+  const role = selectedRow.Role || ''
 
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
@@ -199,7 +202,7 @@ export default function UserPage() {
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id, name, role, status, company, isVerified, Entreprise } = row;
-                    const selectedUser = selected.indexOf(name) !== -1;
+                    const selectedUser = selected.indexOf(row.NomComplet) !== -1;
 
                     return (
                       <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
@@ -224,7 +227,7 @@ export default function UserPage() {
 
                         <TableCell align="right">
                           <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                            <Iconify icon={'eva:more-vertical-fill'} />
+                            <Iconify icon={'eva:more-vertical-fill'} onClick={()=> setSelectedRow(row)} />
                           </IconButton>
                         </TableCell>
                       </TableRow>
@@ -294,12 +297,13 @@ export default function UserPage() {
           },
         }}
       >
-        <MenuItem onClick={() => alert("yo")}>
+
+        <MenuItem disabled={role === 'SuperAdmin'} onClick={() => console.log(role)}>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
 
-        <MenuItem sx={{ color: 'error.main' }}>
+        <MenuItem disabled={role === 'SuperAdmin'} sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
           Delete
         </MenuItem>

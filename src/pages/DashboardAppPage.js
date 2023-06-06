@@ -36,19 +36,19 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Nombre de materiel" total={135} icon={'ant-design:area-chart-outlined'} />
+            <AppWidgetSummary title="Nombre de materiel" total={6} icon={'ant-design:area-chart-outlined'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Nombre d'interventions reussites" total={714} color="info" icon={'ant-design:check-square-filled'} />
+            <AppWidgetSummary title="Nombre d'interventions reussites" total={14} color="info" icon={'ant-design:check-square-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Nombre d'interventions en cours" total={17} color="warning" icon={'ant-design:clock-circle-filled'} />
+            <AppWidgetSummary title="Nombre d'interventions en cours" total={2} color="warning" icon={'ant-design:clock-circle-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Nombre d'interventions non reussites" total={23} color="error" icon={'ant-design:close-circle-filled'} />
+            <AppWidgetSummary title="Nombre d'interventions non reussites" total={2} color="error" icon={'ant-design:close-circle-filled'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
@@ -116,10 +116,6 @@ export default function DashboardAppPage() {
             />
           </Grid>
 
-
-
-
-
           <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline
               title="Chronologie des interventions"
@@ -137,7 +133,6 @@ export default function DashboardAppPage() {
               }))}
             />
           </Grid>
-
 
         </Grid>
       </Container>

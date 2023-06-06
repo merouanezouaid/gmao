@@ -151,7 +151,7 @@ export default function UserPage() {
 
   const [selectedRow, setSelectedRow] = useState('row');
 
-  const role = selectedRow.Role || ''
+  const role = selectedRow.Role || 'SuperAdmin'
 
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
@@ -298,12 +298,12 @@ export default function UserPage() {
         }}
       >
 
-        <MenuItem disabled={role === 'SuperAdmin'} onClick={() => console.log(role)}>
+        <MenuItem disabled={role === 'SuperAdmin' || role === 'Manager'} onClick={() => console.log(role)}>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
 
-        <MenuItem disabled={role === 'SuperAdmin'} sx={{ color: 'error.main' }}>
+        <MenuItem disabled={role === 'SuperAdmin' || role === 'Manager'} sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
           Delete
         </MenuItem>

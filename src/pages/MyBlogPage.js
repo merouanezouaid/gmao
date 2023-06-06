@@ -46,8 +46,7 @@ const TABLE_HEAD = [
   { id: 'Issue', label: 'Issue', alignRight: false },
   { id: 'Description', label: 'Description', alignRight: false },
   { id: 'demandeur', label: 'Nom de demandeur', alignRight: false },
-  { id: 'assignedto', label: 'Assignée à', alignRight: false },
-  { id: 'etat', label: 'Etat', alignRight: false },
+  { id: 'Terminée', label: 'Terminée', alignRight: false },
   { id: '' },
 ];
 
@@ -159,10 +158,35 @@ export default function UserPage() {
     //   alert(`Tache assigné à ${user} avec succès !`)
     // }
     setOpen3(!open3);
+    let status = prompt("Tache terminée ? (Oui/Non)");
+    while (status == null || status === ""){
+      status = prompt("Tache terminée ? (Oui/Non)");
+    }
+    if(status === "Oui" || status === "oui" || status === "non" || status === "Non"){
+      let commentaire= prompt("Commentaire :");
+      while (commentaire== null || commentaire=== ""){
+        commentaire= prompt("Commentaire :");
+      }
+
+      const data = {
+        selectedRow,
+        status,
+        commentaire
+      }
+      Axios.post('http://localhost:3001/intervention/complete', data).then((response) => {
+        alert("Tache terminée avec succès !");
+
+    }).catch((err) => {
+      alert(err);
+  })
   }
+}
 
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
+  const [selectedRow, setSelectedRow] = useState({});
+
+  
 
   const handleIntervention = () => {
     setOpen2(!open2);
@@ -170,9 +194,9 @@ export default function UserPage() {
   
   const [interventions, setInterventions] = useState([]);
   useEffect(() => {
-    const user = localStorage.getItem("user").NomComplet;
+    const user = JSON.parse(localStorage.getItem("user")).user.NomComplet;
     console.log(user)
-    Axios.get('http://localhost:3001/intervention/get').then((response) => {
+    Axios.post('http://localhost:3001/intervention/getAssigned', {user}).then((response) => {
       setInterventions(response.data);
       console.log(response.data);
     });
@@ -195,11 +219,8 @@ export default function UserPage() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Interventions
+            Mes Interventions
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleIntervention}>
-            Nouvelle intervention
-          </Button>
         </Stack>
         <NewIntervention isOpen={open2} toggle={handleIntervention} />
 
@@ -221,7 +242,7 @@ export default function UserPage() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { Lieu, Materiel, Station, Priorite, Issue, Description, NomDemandeur, assignee, etat} = row;
+                    const { _id, Lieu, Materiel, Station, Priorite, Issue, Description, NomDemandeur, status} = row;
 
                     return (
                       <TableRow key={Lieu}>
@@ -243,16 +264,14 @@ export default function UserPage() {
                         <TableCell align="left">{Issue}</TableCell>
                         <TableCell align="left">{Description}</TableCell>
                         <TableCell align="left">{NomDemandeur}</TableCell>
-                        <TableCell align="left">{assignee || "Non"}</TableCell>
-                        <TableCell align="left">{assignee ? etat || "En cours" : "Initialisé"}</TableCell>
+                        <TableCell align="left">{status || ''}</TableCell>
 
                         <TableCell align="right">
                           <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                            <Iconify icon={'eva:more-vertical-fill'} onClick={()=> setSelected(row)}/>
+                            <Iconify icon={'eva:more-vertical-fill'} onClick={()=> setSelectedRow({ _id, Lieu, Materiel, Station, Priorite, Issue, Description, NomDemandeur, status})}/>
                           </IconButton>
                         </TableCell>
 
-                        <NewAssign isOpen={open3} toggle={handleAssign} data={selected} />
 
                       </TableRow>
                       
@@ -325,17 +344,7 @@ export default function UserPage() {
 
         <MenuItem onClick={handleAssign} sx={{ color: 'success.main' }}>
           <Iconify icon={'material-symbols:assignment-add'} sx={{ mr: 2 }} />
-          Assign
-        </MenuItem>
-        <MenuItem>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          Edit
-        </MenuItem>
-        
-
-        <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-          Delete
+          Compléter
         </MenuItem>
       </Popover>
     </>

@@ -14,8 +14,6 @@ import MyBlogPage from './pages/MyBlogPage';
 // ----------------------------------------------------------------------
 
 export default function Router() {
-  const name = JSON.parse(localStorage.getItem("user")).user.NomComplet
-  const role = JSON.parse(localStorage.getItem("user")).user.Role
 
 
   const routes = useRoutes([

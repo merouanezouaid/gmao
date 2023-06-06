@@ -9,6 +9,8 @@
     Description: { type: String, required: true },
     NomDemandeur: { type: String, required: true },
     assignee: { type: String, required: false },
+    status: { type: String, required: false },
+    commentaire: { type: String, required: false },
     });
 
     export const Interventions = mongoose.model('Interventions', interventionSchema);

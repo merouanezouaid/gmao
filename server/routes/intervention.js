@@ -53,5 +53,51 @@ router.get("/get", async (req, res) => {
 });
 
 
+router.post('/delete', async (req, res) => {
+  const id = req.body._id;
+  try{
+    await Interventions.findByIdAndDelete(id).exec();
+    res.send("deleted");
+  }
+  catch(err) {
+    res.send({error: err})
+  }
+})
+
+router.post('/getAssigned', async (req, res) => {
+    const user = req.body.user;
+    const inters = await Interventions.find({ assignee: user});
+    res.send(inters);
+})
+
+
+router.post('/complete', async (req, res) => {
+  const id = req.body.selectedRow._id;
+  const respo = {
+    _id: req.body.selectedRow._id,
+    Lieu: req.body.selectedRow.Lieu,
+    Materiel: req.body.selectedRow.Materiel,
+    Station: req.body.selectedRow.Station,
+    Priorite: req.body.selectedRow.Priorite,
+    Issue: req.body.selectedRow.Issue,
+    Description: req.body.selectedRow.Description,
+    NomDemandeur: req.body.selectedRow.NomDemandeur,
+    assignee: req.body.selectedRow.assignee,
+    status: req.body.status,
+    commentaire: req.body.commentaire
+  }
+  
+  try{
+    await Interventions.findByIdAndUpdate(id, respo, {
+        new: true, 
+    });
+    console.log(req.body)
+    res.send("updated");
+  }
+  catch(err) {
+    res.send({error: err})
+  }
+})
+
 
 export { router as interventionRouter };

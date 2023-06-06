@@ -48,6 +48,7 @@ const TABLE_HEAD = [
   { id: 'demandeur', label: 'Nom de demandeur', alignRight: false },
   { id: 'assignedto', label: 'Assignée à', alignRight: false },
   { id: 'etat', label: 'Etat', alignRight: false },
+  { id: 'comment', label: 'Commentaire', alignRight: false },
   { id: '' },
 ];
 
@@ -158,6 +159,7 @@ export default function UserPage() {
     //   console.log("Assigné");
     //   alert(`Tache assigné à ${user} avec succès !`)
     // }
+    console.log(selected);
     setOpen3(!open3);
   }
 
@@ -184,6 +186,7 @@ export default function UserPage() {
 
   const isNotFound = !filteredUsers.length && !!filterName;
 
+  const assignee = selected.assignee;
 
 
   return (
@@ -221,7 +224,21 @@ export default function UserPage() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { Lieu, Materiel, Station, Priorite, Issue, Description, NomDemandeur, assignee, etat} = row;
+                    const { Lieu, Materiel, Station, Priorite, Issue, Description, NomDemandeur, assignee, commentaire} = row;
+                    let {status} = row;
+                    if(status === "Oui" || status === "oui"){
+                      status = "Complété"
+                    }
+                    else if(status === "Non" || status === "non"){
+                      status = "Non complété"
+                    }
+                    else if(assignee){
+                      status = "En cours"
+                    }
+                    else{
+                      status = "En attente"
+                    }
+
 
                     return (
                       <TableRow key={Lieu}>
@@ -243,8 +260,9 @@ export default function UserPage() {
                         <TableCell align="left">{Issue}</TableCell>
                         <TableCell align="left">{Description}</TableCell>
                         <TableCell align="left">{NomDemandeur}</TableCell>
-                        <TableCell align="left">{assignee || "Non"}</TableCell>
-                        <TableCell align="left">{assignee ? etat || "En cours" : "Initialisé"}</TableCell>
+                        <TableCell align="left">{assignee || "-"}</TableCell>
+                        <TableCell align="left">{status}</TableCell>
+                        <TableCell align="left">{commentaire}</TableCell>
 
                         <TableCell align="right">
                           <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
@@ -323,7 +341,7 @@ export default function UserPage() {
         }}
       >
 
-        <MenuItem onClick={handleAssign} sx={{ color: 'success.main' }}>
+        <MenuItem disabled={typeof assignee !== 'undefined'} onClick={handleAssign} sx={{ color: 'success.main' }}>
           <Iconify icon={'material-symbols:assignment-add'} sx={{ mr: 2 }} />
           Assign
         </MenuItem>

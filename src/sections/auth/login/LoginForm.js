@@ -26,7 +26,7 @@ export default function LoginForm() {
       .then((response) => {
         // console.log(response.status);
           localStorage.setItem("user", JSON.stringify(response.data));
-          console.log(JSON.parse(localStorage.getItem("user")).user);
+          console.log(JSON.parse(localStorage.getItem("user")).user.Email);
           console.log("Successfully Logged in!!");
           navigate('/dashboard', { replace: true });
       }).catch((err) => {
